@@ -11,6 +11,7 @@
 
 #include	"mlx_int.h"
 
+int	mlx_int_set_win_event_mask(t_xvar *xvar);
 extern int	(*(mlx_int_param_event[]))();
 
 
