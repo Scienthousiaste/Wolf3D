@@ -15,7 +15,7 @@
 void			get_points(t_wolf *wolf)
 {
 	t_points_list	*unique_points;
-	t_points_list	*cur;
+	// t_points_list	*cur;
 	size_t			i;
 
 	i = 0;
@@ -37,7 +37,7 @@ void			get_points(t_wolf *wolf)
 		i++;
 	}
 	wolf->map.unique_points = unique_points;
-	cur = wolf->map.unique_points;
+	// cur = wolf->map.unique_points;
 }
 
 int				is_not_in(t_point p, t_points_list *unique_points,
