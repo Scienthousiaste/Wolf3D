@@ -33,7 +33,7 @@ SRC	= main.c parse_map.c mlx.c errors.c small_functions.c init.c	\
 
 HEAD	= wolf.h defines.h structs.h
 
-LIBDIR	= ./libft
+LIBDIR	= libft
 LIBFT	= $(LIBDIR)/libft.a
 
 OBJ		= $(SRC:.c=.o)
@@ -50,7 +50,7 @@ all: $(LIBFT) $(OBJDIR) $(NAME)
 re: fclean all
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADP)
-	$(CC) $(CFLAGS) -c -o $@ $< -I$(LIBFT) $(INCP)
+	$(CC) $(CFLAGS) -c -o $@ $< -I$(LIBDIR) $(INCP)
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
@@ -59,7 +59,7 @@ $(LIBFT):
 	make all -C $(LIBDIR)
 
 $(NAME): $(LIBFT) $(OBJP)
-	$(CC) $(CFLAGS) -o $@ $^ -I$(LIBFT) $(MLXP) $(MLX)
+	$(CC) $(CFLAGS) -o $@ $^ -I$(LIBDIR) $(MLXP) $(MLX)
 
 clean:
 	make clean -C $(LIBDIR)
