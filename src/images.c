@@ -12,34 +12,13 @@
 
 #include "wolf.h"
 
-static char	*change_extension_to_png(const char *xpm_path)
-{
-	char	*png_path;
-	size_t	len;
-
-	len = ft_strlen(xpm_path);
-	if (len < 4)
-		return (ft_strdup(xpm_path));
-	png_path = ft_strnew(len);
-	if (!png_path)
-		return (NULL);
-	ft_strncpy(png_path, xpm_path, len - 3);
-	ft_strcat(png_path, "png");
-	return (png_path);
-}
-
 t_img	make_img(t_wolf *wolf, char *file)
 {
 	t_img			img;
 	mlx_texture_t	*texture;
-	char			*png_path;
 
 	ft_bzero(&img, sizeof(t_img));
-	png_path = change_extension_to_png(file);
-	if (!png_path)
-		parsing_error(MALLOC_ERROR, 0);
-	texture = mlx_load_png(png_path);
-	free(png_path);
+	texture = mlx_load_png(file);
 	if (!texture)
 	{
 		ft_putstr_fd("Warning: Could not load texture: ", 2);

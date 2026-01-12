@@ -50,14 +50,14 @@ void	init_sprites(t_wolf *wolf)
 {
 	if (!(wolf->sprites = (t_img*)malloc(sizeof(t_img) * NB_SPRITES)))
 		exit_on_error(MALLOC_ERROR);
-	wolf->sprites[MUSHROOM_SPRITE] = make_img(wolf, "sprites/mushroom.xpm");
-	wolf->sprites[BARREL_SPRITE] = make_img(wolf, "sprites/barrel.xpm");
+	wolf->sprites[MUSHROOM_SPRITE] = make_img(wolf, "sprites/mushroom.png");
+	wolf->sprites[BARREL_SPRITE] = make_img(wolf, "sprites/barrel.png");
 	wolf->sprites[CAT_ARMS_SPRITE] =
-		make_img(wolf, "sprites/cat_arm_small.xpm");
-	wolf->sprites[CAT_LEGS_SPRITE] = make_img(wolf, "sprites/cat_legs.xpm");
-	wolf->sprites[CATNIP_SPRITE] = make_img(wolf, "sprites/catnip.xpm");
-	wolf->sprites[CHAIR_SPRITE] = make_img(wolf, "sprites/chair.xpm");
-	wolf->sprites[CHAIRHAIR_SPRITE] = make_img(wolf, "sprites/chair_hair.xpm");
+		make_img(wolf, "sprites/cat_arm_small.png");
+	wolf->sprites[CAT_LEGS_SPRITE] = make_img(wolf, "sprites/cat_legs.png");
+	wolf->sprites[CATNIP_SPRITE] = make_img(wolf, "sprites/catnip.png");
+	wolf->sprites[CHAIR_SPRITE] = make_img(wolf, "sprites/chair.png");
+	wolf->sprites[CHAIRHAIR_SPRITE] = make_img(wolf, "sprites/chair_hair.png");
 }
 
 void	init_textures(t_wolf *wolf)
@@ -66,19 +66,19 @@ void	init_textures(t_wolf *wolf)
 		exit_on_error(TOO_FEW_TEXTURES);
 	if (!(wolf->textures = (t_img*)malloc(sizeof(t_img) * NB_TEXTURES)))
 		exit_on_error(MALLOC_ERROR);
-	wolf->textures[GRUMPY_TEXTURE] = make_img(wolf, "textures/grumpy.xpm");
-	wolf->textures[STONE_TEXTURE] = make_img(wolf, "textures/greystone.xpm");
-	wolf->textures[BRICK_TEXTURE] = make_img(wolf, "textures/redbrick.xpm");
-	wolf->textures[WOOD_TEXTURE] = make_img(wolf, "textures/wood.xpm");
+	wolf->textures[GRUMPY_TEXTURE] = make_img(wolf, "textures/grumpy.png");
+	wolf->textures[STONE_TEXTURE] = make_img(wolf, "textures/greystone.png");
+	wolf->textures[BRICK_TEXTURE] = make_img(wolf, "textures/redbrick.png");
+	wolf->textures[WOOD_TEXTURE] = make_img(wolf, "textures/wood.png");
 	wolf->textures[BLUESTONE_TEXTURE] = make_img(wolf,
-			"textures/bluestone.xpm");
+			"textures/bluestone.png");
 	wolf->textures[PURPLESTONE_TEXTURE] = make_img(wolf,
-			"textures/purplestone.xpm");
+			"textures/purplestone.png");
 	wolf->textures[COLORSTONE_TEXTURE] = make_img(wolf,
-			"textures/colorstone.xpm");
-	wolf->textures[LITTER_TEXTURE] = make_img(wolf, "textures/litter.xpm");
-	wolf->textures[RUG_TEXTURE] = make_img(wolf, "textures/rug.xpm");
-	wolf->textures[DRUG_TEXTURE] = make_img(wolf, "textures/drogues.xpm");
+			"textures/colorstone.png");
+	wolf->textures[LITTER_TEXTURE] = make_img(wolf, "textures/litter.png");
+	wolf->textures[RUG_TEXTURE] = make_img(wolf, "textures/rug.png");
+	wolf->textures[DRUG_TEXTURE] = make_img(wolf, "textures/drogues.png");
 }
 
 void	init_wolf(t_wolf *wolf)
