@@ -13,7 +13,7 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-# include "../MLX42/include/MLX42/MLX42.h"
+# include "platform.h"
 
 typedef enum				e_bool
 {
@@ -100,18 +100,16 @@ typedef struct				s_player
 
 typedef struct				s_mlx
 {
-	mlx_t					*mlx;
+	t_platform				*platform;
 	char					*window_name;
 	int						window_height;
 	int						window_width;
 	uint8_t					*window_image;
-	mlx_image_t				*img_ptr;
 	int						img_size_line;
 }							t_mlx;
 
 typedef struct				s_img
 {
-	mlx_image_t				*image;
 	uint8_t					*img_ptr;
 	int						height;
 	int						width;

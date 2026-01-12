@@ -25,16 +25,13 @@ void	open_window(t_mlx *mlx)
 
 void	new_window_image(t_mlx *mlx)
 {
-	mlx->img_ptr = mlx_new_image(mlx->mlx,
-		mlx->window_width, mlx->window_height);
-	if (mlx->img_ptr == NULL)
+	mlx->window_image = platform_get_framebuffer(mlx->platform);
+	if (mlx->window_image == NULL)
 	{
-		ft_putstr_fd("failed to create image\n", 2);
+		ft_putstr_fd("failed to get framebuffer\n", 2);
 		exit(1);
 	}
-	mlx->window_image = mlx->img_ptr->pixels;
 	mlx->img_size_line = mlx->window_width * 4;
-	mlx_image_to_window(mlx->mlx, mlx->img_ptr, 0, 0);
 }
 
 void	close_program(void *param)
@@ -42,5 +39,5 @@ void	close_program(void *param)
 	t_mlx *mlx;
 
 	mlx = (t_mlx *)param;
-	mlx_close_window(mlx->mlx);
+	platform_request_close(mlx->platform);
 }

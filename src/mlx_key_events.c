@@ -12,7 +12,7 @@
 
 #include "wolf.h"
 
-static void	handle_key_press(keys_t key, t_wolf *wolf)
+static void	handle_key_press(t_platform_key key, t_wolf *wolf)
 {
 	if (key == ESCAPE_KEY)
 		close_program(&wolf->mlx);
@@ -24,15 +24,15 @@ static void	handle_key_press(keys_t key, t_wolf *wolf)
 		wolf->player.is_pivoting = -1;
 	else if (key == ARROW_RIGHT)
 		wolf->player.is_pivoting = 1;
-	else if (key == SHIFT_LEFT || key == SHIFT_RIGHT)
+	else if (key == SHIFT_KEY)
 		wolf->player.running_multiple = 2;
-	else if (key == ALT_LEFT || key == ALT_RIGHT)
+	else if (key == ALT_KEY)
 		wolf->player.is_strafing = 1;
 	key_press_handle_attack(key, wolf);
 	key_press_handle_minimap(key, wolf);
 }
 
-static void	handle_key_release(keys_t key, t_wolf *wolf)
+static void	handle_key_release(t_platform_key key, t_wolf *wolf)
 {
 	if (key == ARROW_UP)
 		wolf->player.is_moving = 0;
@@ -42,26 +42,26 @@ static void	handle_key_release(keys_t key, t_wolf *wolf)
 		wolf->player.is_pivoting = (wolf->player.is_pivoting == -1) ? 0 : 1;
 	else if (key == ARROW_RIGHT)
 		wolf->player.is_pivoting = (wolf->player.is_pivoting == 1) ? 0 : -1;
-	else if (key == SHIFT_LEFT || key == SHIFT_RIGHT)
+	else if (key == SHIFT_KEY)
 		wolf->player.running_multiple = 1;
-	else if (key == ALT_LEFT || key == ALT_RIGHT)
+	else if (key == ALT_KEY)
 		wolf->player.is_strafing = 0;
 }
 
-static void	key_handler(mlx_key_data_t keydata, void *param)
+static void	key_handler(t_platform_key key, int pressed, void *param)
 {
 	t_wolf	*wolf;
 
 	wolf = (t_wolf *)param;
-	if (keydata.action == MLX_PRESS)
-		handle_key_press(keydata.key, wolf);
-	else if (keydata.action == MLX_RELEASE)
-		handle_key_release(keydata.key, wolf);
+	if (pressed)
+		handle_key_press(key, wolf);
+	else
+		handle_key_release(key, wolf);
 }
 
 void	enable_key_events(t_wolf *wolf)
 {
-	mlx_key_hook(wolf->mlx.mlx, &key_handler, wolf);
+	platform_set_key_callback(wolf->mlx.platform, &key_handler, wolf);
 }
 
 int		key_press_handler(int keycode, t_wolf *wolf)

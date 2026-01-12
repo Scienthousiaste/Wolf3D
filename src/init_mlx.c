@@ -32,11 +32,12 @@ void	init_mlx_struct(t_wolf *wolf)
 
 void	init_mlx(t_mlx *mlx)
 {
-	mlx->mlx = mlx_init(mlx->window_width, mlx->window_height,
-		mlx->window_name, false);
-	if (mlx->mlx == NULL)
+	mlx->platform = platform_init(mlx->window_width, mlx->window_height,
+		mlx->window_name);
+	if (mlx->platform == NULL)
 	{
-		ft_putstr_fd("connection failed::: mlx_init() failed\n", 2);
+		ft_putstr_fd("connection failed::: platform_init() failed\n", 2);
 		exit(1);
 	}
+	mlx->window_image = platform_get_framebuffer(mlx->platform);
 }

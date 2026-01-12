@@ -18,10 +18,10 @@ void	free_everything(t_wolf *wolf)
 
 	i = -1;
 	while (++i < NB_SPRITES)
-		mlx_delete_image(wolf->mlx.mlx, wolf->sprites[i].image);
+		platform_free_texture(wolf->sprites[i].img_ptr);
 	i = -1;
 	while (++i < NB_TEXTURES)
-		mlx_delete_image(wolf->mlx.mlx, wolf->textures[i].image);
+		platform_free_texture(wolf->textures[i].img_ptr);
 	i = -1;
 	while (++i < (int)wolf->map.height)
 		free(wolf->map.array[i]);
@@ -65,11 +65,10 @@ int		main(int ac, char **av)
 		get_points(&wolf);
 		new_window_image(mlx);
 		enable_key_events(&wolf);
-		mlx_close_hook(mlx->mlx, &close_program, (void*)mlx);
-		mlx_loop_hook(mlx->mlx, &main_loop, (void*)&wolf);
-		mlx_loop(mlx->mlx);
+		platform_set_frame_callback(mlx->platform, &main_loop, (void*)&wolf);
+		platform_run(mlx->platform);
 		free_everything(&wolf);
-		mlx_terminate(mlx->mlx);
+		platform_destroy(mlx->platform);
 	}
 	return (0);
 }

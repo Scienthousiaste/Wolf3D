@@ -29,9 +29,9 @@ SRC	= main.c parse_map.c mlx.c errors.c small_functions.c init.c	\
 	  images.c view.c angles.c points.c textures.c objects.c 		\
 	  texture_change.c init_mlx.c sort_objects.c  					\
       insert_intersection.c draw.c free.c get_visible_segments.c	\
-	  mlx_key_events.c special_sprites.c map_checks.c
+	  mlx_key_events.c special_sprites.c map_checks.c platform_mlx.c
 
-HEAD	= wolf.h defines.h structs.h
+HEAD	= wolf.h defines.h structs.h platform.h
 
 LIBDIR	= libft
 LIBFT	= $(LIBDIR)/libft.a

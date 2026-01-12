@@ -14,30 +14,27 @@
 
 t_img	make_img(t_wolf *wolf, char *file)
 {
-	t_img			img;
-	mlx_texture_t	*texture;
+	t_img	img;
+	int		width;
+	int		height;
 
+	(void)wolf;
 	ft_bzero(&img, sizeof(t_img));
-	texture = mlx_load_png(file);
-	if (!texture)
+	img.img_ptr = platform_load_png(file, &width, &height);
+	if (!img.img_ptr)
 	{
 		ft_putstr_fd("Warning: Could not load texture: ", 2);
 		ft_putstr_fd(file, 2);
 		ft_putstr_fd("\n", 2);
-		img.image = mlx_new_image(wolf->mlx.mlx, 64, 64);
-		if (!img.image)
-			parsing_error(IMAGE_ERROR, 0);
 		img.width = 64;
 		img.height = 64;
-		img.img_ptr = img.image->pixels;
+		img.img_ptr = (uint8_t *)malloc(64 * 64 * 4);
+		if (!img.img_ptr)
+			parsing_error(IMAGE_ERROR, 0);
+		ft_bzero(img.img_ptr, 64 * 64 * 4);
 		return (img);
 	}
-	img.image = mlx_texture_to_image(wolf->mlx.mlx, texture);
-	if (!img.image)
-		parsing_error(IMAGE_ERROR, 0);
-	img.width = texture->width;
-	img.height = texture->height;
-	img.img_ptr = img.image->pixels;
-	mlx_delete_texture(texture);
+	img.width = width;
+	img.height = height;
 	return (img);
 }
