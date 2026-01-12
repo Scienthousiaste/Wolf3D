@@ -42,8 +42,8 @@ HEADP	= $(addprefix $(INCDIR)/, $(HEAD))
 OBJP	= $(addprefix $(OBJDIR)/, $(OBJ))
 INCP	= $(foreach dir, $(INCDIR), -I$(dir))
 
-MLXP	= -I ./minilibx  $(THREAD)
-MLX		= -L ./minilibx -lmlx -framework OpenGL -framework AppKit
+MLXP	= -I ./MLX42/include $(THREAD)
+MLX		= ./MLX42/build/libmlx42.a -lglfw -framework Cocoa -framework OpenGL -framework IOKit -L/opt/homebrew/lib
 
 all: $(LIBFT) $(OBJDIR) $(NAME)
 

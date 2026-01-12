@@ -50,17 +50,20 @@ t_pixel	compute_offset_sprite(t_wolf *wolf, t_object *obj,
 void	draw_sprite_pixel(t_draw_data *dd, t_pixel *it, t_wolf *wolf,
 		t_img *sprite)
 {
-	dd->color = sprite->img_ptr[
-		(sprite->size_line / 4) * dd->sprite_pixel.y
-			+ dd->sprite_pixel.x];
+	int	idx;
+
+	idx = (dd->sprite_pixel.y * sprite->width + dd->sprite_pixel.x) * 4;
+	dd->color = sprite->img_ptr[idx] << 24;
+	dd->color += sprite->img_ptr[idx + 1] << 16;
+	dd->color += sprite->img_ptr[idx + 2] << 8;
+	dd->color += sprite->img_ptr[idx + 3];
 	if ((it->x + dd->offset.x) < wolf->mlx.window_width
 			&& (it->x + dd->offset.x) >= 0
 			&& (it->y + dd->offset.y) < wolf->mlx.window_height
 			&& (it->y + dd->offset.y) >= 0
 			&& dd->sprite_pixel.y < sprite->height
 			&& dd->sprite_pixel.x < sprite->width
-			&& dd->color
-			&& dd->color != COLOR_TRANSPARENT)
+			&& (dd->color & 0xFF) != 0)
 	{
 		put_pixel_image(&wolf->mlx, make_pixel(it->x + dd->offset.x,
 					it->y + dd->offset.y), dd->color);

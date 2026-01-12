@@ -13,6 +13,8 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+# include "../MLX42/include/MLX42/MLX42.h"
+
 typedef enum				e_bool
 {
 	FALSE,
@@ -98,25 +100,19 @@ typedef struct				s_player
 
 typedef struct				s_mlx
 {
-	void					*connect;
-	void					*window;
+	mlx_t					*mlx;
 	char					*window_name;
 	int						window_height;
 	int						window_width;
-	int						*window_image;
-	void					*img_ptr;
+	uint8_t					*window_image;
+	mlx_image_t				*img_ptr;
 	int						img_size_line;
-	int						bpp;
-	int						endian;
 }							t_mlx;
 
 typedef struct				s_img
 {
-	void					*image;
-	int						*img_ptr;
-	int						bits_per_pixel;
-	int						size_line;
-	int						endian;
+	mlx_image_t				*image;
+	uint8_t					*img_ptr;
 	int						height;
 	int						width;
 }							t_img;

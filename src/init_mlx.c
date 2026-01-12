@@ -19,20 +19,22 @@ void	init_mlx_struct(t_wolf *wolf)
 
 	map = &wolf->map;
 	mlx = &wolf->mlx;
-	ft_bzero((void *)mlx, sizeof(mlx));
+	ft_bzero((void *)mlx, sizeof(t_mlx));
 	mlx->window_name = "Wolf3D";
 	mlx->window_width = WIN_WIDTH;
 	mlx->window_height = WIN_HEIGHT;
+	mlx->img_size_line = WIN_WIDTH * 4;
 	map->offset_y = 0;
 	map->offset_x = 0;
-	map->line_size = (mlx->img_size_line / 4);
+	map->line_size = WIN_WIDTH;
 	map->square_side = DEFAULT_SQUARE_SIDE;
 }
 
 void	init_mlx(t_mlx *mlx)
 {
-	mlx->connect = mlx_init();
-	if (mlx->connect == NULL)
+	mlx->mlx = mlx_init(mlx->window_width, mlx->window_height,
+		mlx->window_name, false);
+	if (mlx->mlx == NULL)
 	{
 		ft_putstr_fd("connection failed::: mlx_init() failed\n", 2);
 		exit(1);

@@ -20,24 +20,27 @@ void	*meow_thread(void)
 
 void	open_window(t_mlx *mlx)
 {
-	mlx->window = mlx_new_window(mlx->connect, mlx->window_width,
-		mlx->window_height, mlx->window_name);
-	if (mlx->window == NULL)
-	{
-		ft_putstr_fd("connection failed::: mlx_new_window() failed\n", 2);
-	}
+	(void)mlx;
 }
 
 void	new_window_image(t_mlx *mlx)
 {
-	mlx->img_ptr = mlx_new_image(mlx->connect,
+	mlx->img_ptr = mlx_new_image(mlx->mlx,
 		mlx->window_width, mlx->window_height);
-	mlx->window_image = (int *)mlx_get_data_addr(mlx->img_ptr, &mlx->bpp,
-		&mlx->img_size_line, &mlx->endian);
+	if (mlx->img_ptr == NULL)
+	{
+		ft_putstr_fd("failed to create image\n", 2);
+		exit(1);
+	}
+	mlx->window_image = mlx->img_ptr->pixels;
+	mlx->img_size_line = mlx->window_width * 4;
+	mlx_image_to_window(mlx->mlx, mlx->img_ptr, 0, 0);
 }
 
-int		close_program(t_mlx *mlx)
+void	close_program(void *param)
 {
-	(void)mlx;
-	exit(1);
+	t_mlx *mlx;
+
+	mlx = (t_mlx *)param;
+	mlx_close_window(mlx->mlx);
 }

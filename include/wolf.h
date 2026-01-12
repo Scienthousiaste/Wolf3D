@@ -14,7 +14,7 @@
 # define WOLF_H
 
 # include "../libft/libft.h"
-# include "../minilibx/mlx.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
@@ -36,7 +36,7 @@
 void				enable_key_events(t_wolf *wolf);
 void				open_window(t_mlx *mlx);
 void				new_window_image(t_mlx *mlx);
-int					close_program(t_mlx *mlx);
+void				close_program(void *param);
 int					key_press_handler(int keycode, t_wolf *wolf);
 int					key_press_handle_attack(int keycode, t_wolf *wolf);
 int					key_release_handler(int keycode, t_wolf *wolf);

@@ -14,27 +14,27 @@
 # define DEFINES_H
 
 /*
-** KEYS
+** KEYS (MLX42 / GLFW keycodes)
 */
-# define ESCAPE_KEY 53
-# define PLUS_SIGN 24
-# define MINUS_SIGN 27
-# define ARROW_UP 126
-# define ARROW_DOWN 125
-# define ARROW_RIGHT 124
-# define ARROW_LEFT 123
+# define ESCAPE_KEY MLX_KEY_ESCAPE
+# define PLUS_SIGN MLX_KEY_EQUAL
+# define MINUS_SIGN MLX_KEY_MINUS
+# define ARROW_UP MLX_KEY_UP
+# define ARROW_DOWN MLX_KEY_DOWN
+# define ARROW_RIGHT MLX_KEY_RIGHT
+# define ARROW_LEFT MLX_KEY_LEFT
 # define RED_CROSS 17
-# define SHIFT_LEFT 257
-# define SHIFT_RIGHT 258
-# define ALT_LEFT 261
-# define ALT_RIGHT 262
-# define KEY_V 9
-# define KEY_M 46
-# define KEY_ONE 18
-# define KEY_TWO 19
-# define KEY_B 11
-# define SPACEBAR 49
-# define LEFT_COMMAND 259
+# define SHIFT_LEFT MLX_KEY_LEFT_SHIFT
+# define SHIFT_RIGHT MLX_KEY_RIGHT_SHIFT
+# define ALT_LEFT MLX_KEY_LEFT_ALT
+# define ALT_RIGHT MLX_KEY_RIGHT_ALT
+# define KEY_V MLX_KEY_V
+# define KEY_M MLX_KEY_M
+# define KEY_ONE MLX_KEY_1
+# define KEY_TWO MLX_KEY_2
+# define KEY_B MLX_KEY_B
+# define SPACEBAR MLX_KEY_SPACE
+# define LEFT_COMMAND MLX_KEY_LEFT_SUPER
 
 /*
 ** MOUSE

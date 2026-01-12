@@ -18,10 +18,10 @@ void	free_everything(t_wolf *wolf)
 
 	i = -1;
 	while (++i < NB_SPRITES)
-		mlx_destroy_image(wolf->mlx.connect, wolf->sprites[i].image);
+		mlx_delete_image(wolf->mlx.mlx, wolf->sprites[i].image);
 	i = -1;
 	while (++i < NB_TEXTURES)
-		mlx_destroy_image(wolf->mlx.connect, wolf->textures[i].image);
+		mlx_delete_image(wolf->mlx.mlx, wolf->textures[i].image);
 	i = -1;
 	while (++i < (int)wolf->map.height)
 		free(wolf->map.array[i]);
@@ -31,7 +31,7 @@ void	free_everything(t_wolf *wolf)
 	free(wolf->map.array);
 }
 
-int		main_loop(void *param)
+void	main_loop(void *param)
 {
 	t_wolf *wolf;
 
@@ -45,9 +45,6 @@ int		main_loop(void *param)
 	draw_sprites(wolf);
 	if (wolf->player.display_minimap)
 		draw_minimap(wolf);
-	mlx_put_image_to_window(wolf->mlx.connect, wolf->mlx.window,
-		wolf->mlx.img_ptr, 0, 0);
-	return (1);
 }
 
 int		main(int ac, char **av)
@@ -66,13 +63,13 @@ int		main(int ac, char **av)
 		parse_map(av[1], &wolf);
 		get_segments(&wolf);
 		get_points(&wolf);
-		open_window(mlx);
-		enable_key_events(&wolf);
 		new_window_image(mlx);
-		mlx_hook(mlx->window, RED_CROSS, 0, &close_program, (void*)mlx);
-		mlx_loop_hook(mlx->connect, &main_loop, (void*)&wolf);
-		mlx_loop(mlx->connect);
+		enable_key_events(&wolf);
+		mlx_close_hook(mlx->mlx, &close_program, (void*)mlx);
+		mlx_loop_hook(mlx->mlx, &main_loop, (void*)&wolf);
+		mlx_loop(mlx->mlx);
 		free_everything(&wolf);
+		mlx_terminate(mlx->mlx);
 	}
 	return (0);
 }

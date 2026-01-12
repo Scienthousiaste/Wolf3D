@@ -28,6 +28,7 @@ void	put_cat_arm_in_img(t_wolf *wolf, t_img *sprite,
 	int line;
 	int col;
 	int color;
+	int idx;
 
 	col = 0;
 	while (col < sprite->height && col + offset_y <= wolf->mlx.window_height)
@@ -36,8 +37,12 @@ void	put_cat_arm_in_img(t_wolf *wolf, t_img *sprite,
 		while (line < sprite->width && line + offset_x
 				<= wolf->mlx.window_width)
 		{
-			color = sprite->img_ptr[sprite->size_line / 4 * col + line];
-			if (color != COLOR_TRANSPARENT)
+			idx = (col * sprite->width + line) * 4;
+			color = sprite->img_ptr[idx] << 24;
+			color += sprite->img_ptr[idx + 1] << 16;
+			color += sprite->img_ptr[idx + 2] << 8;
+			color += sprite->img_ptr[idx + 3];
+			if ((color & 0xFF) != 0)
 			{
 				put_pixel_image(&wolf->mlx, make_pixel(line + offset_x,
 							col + offset_y), color);
@@ -82,6 +87,7 @@ void	put_cat_legs_in_img(t_wolf *wolf, t_img *sprite)
 	int		line;
 	int		col;
 	int		color;
+	int		idx;
 
 	col = -1;
 	offset.x = wolf->mlx.window_width / 2 - 200;
@@ -97,8 +103,12 @@ void	put_cat_legs_in_img(t_wolf *wolf, t_img *sprite)
 		while (++line < sprite->width && line + offset.x
 				<= wolf->mlx.window_width)
 		{
-			color = sprite->img_ptr[sprite->size_line / 4 * col + line];
-			if (color && color != COLOR_TRANSPARENT)
+			idx = (col * sprite->width + line) * 4;
+			color = sprite->img_ptr[idx] << 24;
+			color += sprite->img_ptr[idx + 1] << 16;
+			color += sprite->img_ptr[idx + 2] << 8;
+			color += sprite->img_ptr[idx + 3];
+			if ((color & 0xFF) != 0)
 				put_pixel_image(&wolf->mlx, make_pixel(line + offset.x,
 					col + offset.y), color);
 		}

@@ -17,13 +17,18 @@ int	get_texture_color(t_img *texture, t_segment *wall, t_point *intersect,
 {
 	double	prop_x;
 	int		color;
+	int		idx;
 
 	if (wall->orientation == RIGHT || wall->orientation == LEFT)
 		prop_x = intersect->y - (double)(floor(intersect->y));
 	else
 		prop_x = intersect->x - (double)(floor(intersect->x));
-	color = texture->img_ptr[(int)(prop_y * texture->height)
-		* texture->width + (int)(prop_x * texture->width)];
+	idx = ((int)(prop_y * texture->height) * texture->width
+		+ (int)(prop_x * texture->width)) * 4;
+	color = texture->img_ptr[idx] << 24;
+	color += texture->img_ptr[idx + 1] << 16;
+	color += texture->img_ptr[idx + 2] << 8;
+	color += texture->img_ptr[idx + 3];
 	return (color);
 }
 
