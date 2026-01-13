@@ -1,3 +1,8 @@
 *.o
 Makefile.gen
 wolf3D
+obj_web/
+wolf3d.html
+wolf3d.js
+wolf3d.wasm
+wolf3d.data

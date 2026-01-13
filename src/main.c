@@ -45,6 +45,7 @@ void	main_loop(void *param)
 	draw_sprites(wolf);
 	if (wolf->player.display_minimap)
 		draw_minimap(wolf);
+	platform_present(wolf->mlx.platform);
 }
 
 int		main(int ac, char **av)

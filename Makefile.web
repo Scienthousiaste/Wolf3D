@@ -1,0 +1,69 @@
+# **************************************************************************** #
+#                                                                              #
+#    Makefile.web - Emscripten/WASM build                                      #
+#                                                                              #
+# **************************************************************************** #
+
+.PHONY: all clean
+
+CC		= emcc
+CFLAGS	= -Wall -Wextra -O2 -DPLATFORM_WEB
+
+NAME	= wolf3d.html
+
+SRCDIR	= src
+OBJDIR	= obj_web
+INCDIR	= include
+
+# Same sources as desktop, but swap platform_mlx.c for platform_web.c
+SRC	= main.c parse_map.c mlx.c errors.c small_functions.c init.c	\
+	  update_player_position.c raycasting.c lines.c					\
+	  segments_get.c segments_count.c segments_helpers.c			\
+	  segments.c drug.c minimap.c sprites.c trace_line.c 			\
+	  images.c view.c angles.c points.c textures.c objects.c 		\
+	  texture_change.c init_mlx.c sort_objects.c  					\
+	  insert_intersection.c draw.c free.c get_visible_segments.c	\
+	  mlx_key_events.c special_sprites.c map_checks.c platform_web.c
+
+HEAD	= wolf.h defines.h structs.h platform.h
+
+LIBDIR	= libft
+LIBSRC	= $(wildcard $(LIBDIR)/*.c)
+LIBOBJ	= $(patsubst $(LIBDIR)/%.c,$(OBJDIR)/libft_%.o,$(LIBSRC))
+
+OBJ		= $(SRC:.c=.o)
+
+HEADP	= $(addprefix $(INCDIR)/, $(HEAD))
+OBJP	= $(addprefix $(OBJDIR)/, $(OBJ))
+INCP	= $(foreach dir, $(INCDIR), -I$(dir))
+
+# Emscripten flags
+EMFLAGS	= -s WASM=1 \
+		  -s ALLOW_MEMORY_GROWTH=1 \
+		  -s NO_EXIT_RUNTIME=1 \
+		  --preload-file textures \
+		  --preload-file sprites \
+		  --preload-file maps \
+		  --shell-file web/shell.html
+
+all: $(OBJDIR) $(NAME)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADP)
+	$(CC) $(CFLAGS) -c -o $@ $< -I$(LIBDIR) $(INCP)
+
+$(OBJDIR)/libft_%.o: $(LIBDIR)/%.c
+	$(CC) $(CFLAGS) -c -o $@ $< -I$(LIBDIR)
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+
+$(NAME): $(OBJP) $(LIBOBJ)
+	$(CC) $(CFLAGS) $(EMFLAGS) -o $@ $^
+
+clean:
+	rm -rf $(OBJDIR)
+	rm -f wolf3d.html wolf3d.js wolf3d.wasm wolf3d.data
+
+serve: all
+	@echo "Starting local server at http://localhost:8080/wolf3d.html"
+	python3 -m http.server 8080

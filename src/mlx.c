@@ -14,8 +14,10 @@
 
 void	*meow_thread(void)
 {
+#ifndef PLATFORM_WEB
 	system("afplay ./sounds/cat.wav");
 	pthread_exit(NULL);
+#endif
 }
 
 void	open_window(t_mlx *mlx)
