@@ -80,13 +80,10 @@ int		key_release_handler(int keycode, t_wolf *wolf)
 
 int		key_press_handle_attack(int keycode, t_wolf *wolf)
 {
-	pthread_t thread;
-
 	if (keycode == SPACEBAR && wolf->player.is_attacking == FALSE)
 	{
 		wolf->player.is_attacking = TRUE;
-		if (pthread_create(&thread, NULL, meow_thread, NULL) == THREAD_ERROR)
-			ft_putstr_fd("error: could not create a new thread\n", 2);
+		play_attack_sound();
 	}
 	else if (keycode == KEY_ONE && wolf->player.is_attacking == FALSE)
 		wolf->player.weapon = ARM;

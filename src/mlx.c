@@ -12,12 +12,9 @@
 
 #include "wolf.h"
 
-void	*meow_thread(void)
+void	play_attack_sound(void)
 {
-#ifndef PLATFORM_WEB
-	system("afplay ./sounds/cat.wav");
-	pthread_exit(NULL);
-#endif
+	platform_play_sound("./sounds/cat.wav");
 }
 
 void	open_window(t_mlx *mlx)

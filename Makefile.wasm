@@ -44,6 +44,7 @@ EMFLAGS	= -s WASM=1 \
 		  --preload-file textures \
 		  --preload-file sprites \
 		  --preload-file maps \
+		  --preload-file sounds \
 		  --shell-file web/shell.html
 
 all: $(OBJDIR) $(NAME)

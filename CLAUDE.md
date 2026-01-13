@@ -4,9 +4,7 @@
 - Desktop version works with platform abstraction (platform_mlx.c)
 - Web/WASM version works with platform abstraction (platform_web.c)
 - Canvas 2D rendering with embedded assets
-
-## To do next:
-- Add sound for web build using Web Audio API (currently disabled, desktop uses `system("afplay ...")`)
+- Audio support via platform_play_sound() (desktop: afplay, web: Web Audio API)
 
 ## Build instructions
 
@@ -22,7 +20,7 @@ make
 source ../emsdk/emsdk_env.sh
 
 # Build
-make -f Makefile.web
+make -f Makefile.wasm
 
 # Serve locally
 python3 -m http.server 8080

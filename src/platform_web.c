@@ -236,4 +236,32 @@ void	platform_free_texture(uint8_t *data)
 		stbi_image_free(data);
 }
 
+void	platform_play_sound(const char *path)
+{
+	EM_ASM({
+		var path = UTF8ToString($0);
+		fetch(path)
+			.then(function(response) { return response.arrayBuffer(); })
+			.then(function(arrayBuffer) {
+				var AudioContext = window.AudioContext || window.webkitAudioContext;
+				if (!window._audioCtx) {
+					window._audioCtx = new AudioContext();
+				}
+				var ctx = window._audioCtx;
+				if (ctx.state === 'suspended') {
+					ctx.resume();
+				}
+				ctx.decodeAudioData(arrayBuffer, function(buffer) {
+					var source = ctx.createBufferSource();
+					source.buffer = buffer;
+					source.connect(ctx.destination);
+					source.start(0);
+				});
+			})
+			.catch(function(err) {
+				console.error('Audio error:', err);
+			});
+	}, path);
+}
+
 #endif

@@ -12,6 +12,8 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 # include <stdlib.h>
 # include <string.h>
+# include <stdio.h>
+# include <pthread.h>
 
 struct s_platform
 {
@@ -215,6 +217,32 @@ uint8_t	*platform_load_png(const char *path, int *width, int *height)
 void	platform_free_texture(uint8_t *data)
 {
 	free(data);
+}
+
+static void	*sound_thread(void *arg)
+{
+	char	cmd[512];
+	char	*path;
+
+	path = (char *)arg;
+	snprintf(cmd, sizeof(cmd), "afplay \"%s\"", path);
+	system(cmd);
+	free(path);
+	return (NULL);
+}
+
+void	platform_play_sound(const char *path)
+{
+	pthread_t	tid;
+	char		*path_copy;
+
+	path_copy = strdup(path);
+	if (!path_copy)
+		return ;
+	if (pthread_create(&tid, NULL, sound_thread, path_copy) == 0)
+		pthread_detach(tid);
+	else
+		free(path_copy);
 }
 
 #endif

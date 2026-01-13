@@ -79,4 +79,9 @@ uint8_t			*platform_load_png(const char *path,
 					int *width, int *height);
 void			platform_free_texture(uint8_t *data);
 
+/*
+** Audio
+*/
+void			platform_play_sound(const char *path);
+
 #endif

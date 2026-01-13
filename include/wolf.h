@@ -42,7 +42,7 @@ int					key_press_handle_attack(int keycode, t_wolf *wolf);
 int					key_release_handler(int keycode, t_wolf *wolf);
 int					key_press_handle_minimap(int keycode, t_wolf *wolf);
 int					set_rgb(int red, int green, int blue);
-void				*meow_thread();
+void				play_attack_sound(void);
 
 /*
 ** parsing
