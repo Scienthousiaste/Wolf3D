@@ -77,7 +77,7 @@ static EM_BOOL	key_down_callback(int event_type,
 	if (!p)
 		return (EM_FALSE);
 	pkey = dom_key_to_platform(event->code);
-	if (pkey == PKEY_NONE)
+	if (pkey == PKEY_NONE || pkey == PKEY_ESCAPE)
 		return (EM_FALSE);
 	if (pkey == PKEY_F && !p->keys[pkey])
 		p->show_fps = !p->show_fps;
