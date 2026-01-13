@@ -28,6 +28,10 @@ struct s_platform
 	t_key_callback		key_cb;
 	void				*key_param;
 	int					keys[PKEY_COUNT];
+	int					show_fps;
+	double				last_time;
+	int					frame_count;
+	double				fps;
 };
 
 static t_platform	*g_platform = NULL;
@@ -56,6 +60,8 @@ static t_platform_key	dom_key_to_platform(const char *code)
 		return (PKEY_2);
 	if (strcmp(code, "KeyM") == 0)
 		return (PKEY_M);
+	if (strcmp(code, "KeyF") == 0)
+		return (PKEY_F);
 	return (PKEY_NONE);
 }
 
@@ -73,6 +79,8 @@ static EM_BOOL	key_down_callback(int event_type,
 	pkey = dom_key_to_platform(event->code);
 	if (pkey == PKEY_NONE)
 		return (EM_FALSE);
+	if (pkey == PKEY_F && !p->keys[pkey])
+		p->show_fps = !p->show_fps;
 	p->keys[pkey] = 1;
 	if (p->key_cb)
 		p->key_cb(pkey, 1, p->key_param);
@@ -102,10 +110,19 @@ static EM_BOOL	key_up_callback(int event_type,
 static void	main_loop_callback(void)
 {
 	t_platform	*p;
+	double		current_time;
 
 	p = g_platform;
 	if (!p)
 		return ;
+	current_time = emscripten_get_now() / 1000.0;
+	p->frame_count++;
+	if (current_time - p->last_time >= 1.0)
+	{
+		p->fps = p->frame_count / (current_time - p->last_time);
+		p->frame_count = 0;
+		p->last_time = current_time;
+	}
 	if (p->frame_cb)
 		p->frame_cb(p->frame_param);
 }
@@ -168,10 +185,18 @@ void	platform_present(t_platform *p)
 		var width = $0;
 		var height = $1;
 		var ptr = $2;
+		var showFps = $3;
+		var fps = $4;
 		var imageData = ctx.createImageData(width, height);
 		imageData.data.set(HEAPU8.subarray(ptr, ptr + width * height * 4));
 		ctx.putImageData(imageData, 0, 0);
-	}, p->width, p->height, p->framebuffer);
+		if (showFps) {
+			ctx.font = '16px monospace';
+			ctx.fillStyle = 'yellow';
+			ctx.textAlign = 'right';
+			ctx.fillText('FPS: ' + fps.toFixed(1), width - 10, 20);
+		}
+	}, p->width, p->height, p->framebuffer, p->show_fps, p->fps);
 }
 
 void	platform_set_frame_callback(t_platform *p,
@@ -196,7 +221,8 @@ void	platform_run(t_platform *p)
 {
 	if (!p)
 		return ;
-	emscripten_set_main_loop(main_loop_callback, 0, 1);
+	p->last_time = emscripten_get_now() / 1000.0;
+	emscripten_set_main_loop(main_loop_callback, 60, 1);
 }
 
 int	platform_should_close(t_platform *p)

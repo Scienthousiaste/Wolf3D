@@ -30,6 +30,7 @@ typedef enum e_platform_key
 	PKEY_1,
 	PKEY_2,
 	PKEY_M,
+	PKEY_F,
 	PKEY_COUNT
 }	t_platform_key;
 
